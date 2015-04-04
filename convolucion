@@ -1,0 +1,139 @@
+clc
+
+seleccion= input('Realizar convolución entre \n 1. Pulso-Pulso  2. Pulso-Triangulo  3. Rampa-Impulso  4. Impulso-Rampa  5.Salir \n  ');
+
+if seleccion ==1  %Pulso - Pulso
+    clc
+    syms M S k x y N r A       M1 S1 k1 x1 y1 N1 r1 A1  y
+    M=input('Ingrese la Duracion del pulso 1 "M"  : ');             %Parametros Señal pulso 1
+    N=input('Ingrese el soporte del pulso 1 "N": ');
+    A=input('Ingrese la amplitud del pulso 1 "A": ');
+    s=input('Ingrese el numero de muestras "S": ');
+    
+    M1=input('Ingrese la Duracion del pulso 2 "M1"  : ');           %Parametros Señal pulso 2
+    N1=input('Ingrese el soporte del pulso 2 "N1": ');
+    A1=input('Ingrese la amplitud del pulso 2 "A1": ');
+    s1=input('Ingrese el numero de muestras "S1": ');
+    
+    S=s-1;
+    k=(M/2)/S
+    t= (-M/2):k:(M/2);
+    r=(M-N)/2
+
+    v=r/((M/2)/S)  %punto cero
+    p = ((S-v)*2)+1  %punto uno
+
+    pulso=[zeros(1,v),A.*ones(1,p),zeros(1,v)];
+    
+    S1=s1-1;
+    k1=(M1/2)/S1
+    t1= (-M1/2):k1:(M1/2);
+    r1=(M1-N1)/2
+
+    v1=r1/((M1/2)/S1)  %punto cero
+    p1 = ((S1-v1)*2)+1  %punto uno
+
+    pulso1=[zeros(1,v),A.*ones(1,p),zeros(1,v)];
+
+    y=conv(pulso,pulso1);
+    
+    subplot(3,1,1);
+    plot(t,pulso);
+    
+    subplot(3,1,2);
+    plot(t1,pulso1);
+    
+    subplot(3,1,3);
+    plot(y);
+    
+    
+    
+elseif seleccion==2   %Pulso-Triangulo
+    
+    clc
+    syms M S k x y N r A       M1 S1 k1 x1 y1 N1 r1 A1  y
+    M=input('Ingrese la Duracion del pulso "M"  : ');             %Parametros Señal pulso
+    N=input('Ingrese el soporte del pulso "N": ');
+    A=input('Ingrese la amplitud del pulso "A": ');
+    s=input('Ingrese el numero de muestras "S": ');
+    
+    M1=input('Ingrese la Duracion del triangulo "M1"  : ');           %Parametros Señal triangulo
+    N1=input('Ingrese el soporte del triangulo "N1": ');
+    A1=input('Ingrese la amplitud del triangulo "A1": ');
+    s1=input('Ingrese el numero de muestras "S1": ');
+    
+    S=s-1;
+    k=(M/2)/S;
+    t= (-M/2):k:(M/2);
+    r=(M-N)/2;
+
+    v=r/((M/2)/S);  %punto cero
+    p = ((S-v)*2)+1;  %punto uno
+
+    pulso=[zeros(1,v),A.*ones(1,p),zeros(1,v)];
+    
+    S1=s1-1;
+    k1=(M1/2)/S1  %Valor cada intervalo
+    t1= (-M1/2):k1:(M1/2);
+    f_triangular = A1.*tripuls(t1,N1);
+    
+    y=conv(pulso,f_triangular);
+    
+    
+    subplot(3,1,1);
+    plot(t,pulso);
+    
+    subplot(3,1,2);
+    plot(t1,f_triangular);
+    
+    subplot(3,1,3);
+    plot(y);
+        
+    
+elseif seleccion==3   %Rampa-Impulso
+    
+    clc
+    syms M S k A
+    M=input('Ingrese la Duracion de la señal "M"  : ');             %Parametros Señal pulso
+    A=input('Ingrese la amplitud del impulso "A": ');
+    s=input('Ingrese el numero de muestras "S": ');
+    S=s-1;
+    k=(M/2)/S;
+    t= (-M/2):k:(M/2);
+    %f_impulso=[zeros(1,1000),A,zeros(1,1000)];
+    f_impulso=[zeros(1,S),A,zeros(1,S)];
+
+%__________Rampa_________
+
+
+
+
+
+
+elseif seleccion==4   %Pulso-Rampa
+    clc
+    syms M S k x y N r A       M1 S1 k1 x1 y1 N1 r1 A1  y
+    M=input('Ingrese la Duracion del pulso "M"  : ');             %Parametros Señal pulso
+    N=input('Ingrese el soporte del pulso "N": ');
+    A=input('Ingrese la amplitud del pulso "A": ');
+    s=input('Ingrese el numero de muestras "S": ');
+    
+    S=s-1;
+    k=(M/2)/S
+    t= (-M/2):k:(M/2);
+    r=(M-N)/2;
+    v=r/((M/2)/S);  %punto cero
+    p = ((S-v)*2)+1;  %punto uno
+    pulso=[zeros(1,v),A.*ones(1,p),zeros(1,v)];
+    
+%__________Rampa_________
+    
+    
+
+else
+        clear all
+        close all
+        clc
+
+
+end
